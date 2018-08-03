@@ -191,6 +191,20 @@ def unsubscribe_user_to_newsletter(email):
     # sg.client.contactdb.lists._(SENDGRID_MAILING_LIST_ID).recipients._(recipient_id).delete()
     pass
 
+def _get_user_groups(user):
+    group =  {
+            "open_rushie": user.is_open_rushie(),
+            "closed_rushie": user.is_closed_rushie(),
+            "rushie": user.is_rushie(),
+            "pledge": user.is_pledge(),
+            "active_user": user.is_active_user(),
+            "officer": user.is_officer(),
+            "board": user.is_board(),
+            "inactive": user.is_inactive(),
+            "alumni": user.is_alumni()
+            }
+    return group
+
 def jwt_response_payload_format(token, user=None, request=None):
     return {
         'jwt_token': token,
@@ -199,7 +213,14 @@ def jwt_response_payload_format(token, user=None, request=None):
             'email': user.email,
             'full_name': user.full_name,
             'nick_name': user.nick_name,
+            'phone_number': user.phone_number,
             'graduation_date': user.graduation_date,
+            'concentration': user.get_concentration(),
+            'gender': user.get_gender(),
+            'lan_class': user.lan_class,
+            'active_semesters': user.get_active_semesters(),
+            'gravator_image_url': user.get_gravatar_image_url(),
+            'groups': _get_user_groups(user),
             'is_active': user.is_active,
             'is_staff': user.is_staff,
             'is_superuser': user.is_superuser,

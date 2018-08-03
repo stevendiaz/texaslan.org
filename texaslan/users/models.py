@@ -104,7 +104,6 @@ class User(AbstractUser):
     def get_username(self):
         return self.email
 
-
     objects = UserManager()
 
     def __str__(self):
@@ -128,6 +127,9 @@ class User(AbstractUser):
             if short == self.concentration:
                 return actual
         return "N/A"
+
+    def get_active_semesters(self):
+        return [short for (short, actual) in SEMESTERS if short in self.active_semesters.all()]
 
     # User Type
 

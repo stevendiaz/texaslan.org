@@ -7,6 +7,7 @@ from ..users.models import User
 from ..events.models import Event as EventModel
 from allauth.account.utils import send_email_confirmation
 from texaslan.site_settings.models import SiteSettingService
+from django.contrib.auth.models import Group
 
 class AuthRegisterUser(APIView):
     serializer_class = UserSerializer
@@ -16,6 +17,9 @@ class AuthRegisterUser(APIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             new_user = serializer.save()
+            open_rush = Group.objects.get(name="Open Rushie")
+            open_rush.user_set.add(new_user)
+            open_rush.save()
             send_email_confirmation(request._request, new_user)
             return Response(serializer.data,
                     status=status.HTTP_201_CREATED)
