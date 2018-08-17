@@ -32,12 +32,12 @@ Development operations
 
 Running operations on the Django application. Use this for importing fixtures, or any administrative tasks afforded by ``manage.py``.
 ::
-    $ docker exec -it texaslan_web_1 bash
+    $ docker exec -it texaslanorg_web_1 bash
 
 Running SQL operations on the Postgres instance, such as querying, updating, and deleting rows in the database.
 ::
-    $ docker exec -it texaslan_db_1 bash
-    $ su - postgres
+    $ docker exec -it texaslanorg_db_1 bash
+    $ su - texaslan
     $ psql
 
 All included test users have the password ``password``.
